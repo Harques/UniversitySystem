@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Extract Course";
+}
+<div style="padding-left:150px;" id="tbl">
+    <h1 style="margin-left:15px;">Courses</h1>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                url: "/api/university/courses",
+                type: 'GET',
+                success: function (data) {
+                    var keys = Object.keys(data[0]);
+                    generateTable(keys, data);
+                }
+            })
+        });
+        function generateTable(keys, data) {
+            var div = document.getElementById("tbl"),
+                tbl = document.createElement('table');
+            tbl.style.width = '100px';
+            tbl.style.border = '1px solid black';
+            tbl.style.whiteSpace = "nowrap";
+            tbl.className = "table table-bordered table-condensed horizontal-center";
+            var thead = tbl.createTHead();
+            var row = thead.insertRow();
+            row.style.fontSize = "30px";
+            for (let i = 0; i < keys.length; i++) {
+                var th = document.createElement("th");
+                var text = document.createTextNode(keys[i].replace(/([a-zA-Z])(?=[A-Z])/g, '$1 '));
+                th.scope = "col";
+                th.appendChild(text);
+                row.appendChild(th);
+            }
+
+            for (let element of data) {
+                let row = tbl.insertRow();
+                row.style.fontSize = "20px";
+                for (key in element) {
+                    let cell = row.insertCell();
+                    let text = document.createTextNode(element[key]);
+                    cell.appendChild(text);
+                }
+            }
+            div.appendChild(tbl);
+        }
+    </script>
+</div>

@@ -1,0 +1,53 @@
+﻿@model WebApplication1.Models.DTOS.Create.CreateSectionDto
+@{ 
+    ViewBag.Title = "Create Section";
+}
+<div class="vertical-center">
+    <h1 style="margin-left: 130px; margin-bottom:20px;">Create Section</h1>
+    @using (Ajax.BeginForm("", "api/university/sections",
+                new AjaxOptions
+                {
+                    OnSuccess = "OnSuccess",
+                    OnFailure = "OnFailure",
+                    LoadingElementId = "progress"
+                }))
+    {
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Course Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control", aria_describedby = "add1" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Section's Semester:</span>
+                @Html.TextBoxFor(m => m.Semester, new { @class = "form-control", aria_describedby = "add2" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Section's Instructor:</span>
+                @Html.TextBoxFor(m => m.Instructor, new { @class = "form-control", aria_describedby = "add3" })
+            </div>
+            </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:195px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+
+
+    }
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnSuccess(response) {
+            alert(response);
+            console.log("It's done.");
+            location.reload();
+        }
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>
+</div>

@@ -1,0 +1,67 @@
+﻿@model WebApplication1.Models.DTOS.Create.CreateCourseDto
+@{
+    ViewBag.Title = "Create Course";
+}
+
+<div class="vertical-center">
+    <h1 style="margin-left: 140px; margin-bottom:20px;">Create Course</h1>
+    @using (Ajax.BeginForm("", "api/university/courses",
+                new AjaxOptions
+                {
+                    OnSuccess = "OnSuccess",
+                    OnFailure = "OnFailure",
+                    LoadingElementId = "progress"
+                }))
+    {
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Course's Code:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.Code, new { @class = "form-control", aria_describedby = "add1" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Course's Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", aria_describedby = "add2" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Course's Description:&nbsp;&nbsp;</span>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", aria_describedby = "add3" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add4">Course's Credit Hours:</span>
+                @Html.TextBoxFor(m => m.CreditHours, new { @type = "number", @class = "form-control", aria_describedby = "add4" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add5">Department Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", aria_describedby = "add4" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:200px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+
+
+    }
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnSuccess(response) {
+            alert(response);
+            console.log("It's done.");
+            location.reload();
+        }
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>
+</div>
+

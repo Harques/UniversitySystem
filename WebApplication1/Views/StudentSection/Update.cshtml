@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Update Student-Section";
+}
+<div class="vertical-center">
+    <h1 style="margin-left: 55px; margin-bottom:20px;">Update Student Section</h1>
+    <form method="post" action="/api/university/student-sections?_method=PUT" id="updateStudentSection">
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Student Section's ID:</span>
+                <input class="form-control" aria-describedby="add1" type="number" name="ID" id="ID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Student ID:&#8198;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add2" type="number" name="StudentID" id="StudentID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Section ID:&emsp14;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add3" type="number" name="SectionID" id="SectionID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add4">Grade:&emsp13;&hairsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add4" type="text" name="Grade" id="Grade" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:200px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            var form = $('#updateStudentSection');
+            form.submit(function (ev) {
+                var dto = {};
+                dto.ID = $('#ID').val()
+                dto.StudentID = $('#StudentID').val()
+                dto.SectionID = $('#SectionID').val()
+                dto.Grade = $('#Grade').val()
+                ev.preventDefault();
+                var formAction = $(this).attr('action');
+                $.ajax({
+                    url: formAction,
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dto),
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            })
+
+        });
+    </script>
+</div>

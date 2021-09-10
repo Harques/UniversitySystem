@@ -1,0 +1,73 @@
+﻿@model WebApplication1.Models.DTOS.Create.CreateStudentDto
+@{
+    ViewBag.Title = "Create Student";
+}
+
+<div class="vertical-center">
+    <h1 style="margin-left: 150px; margin-bottom:20px;">Create Student</h1>
+    @using (Ajax.BeginForm("", "api/university/students",
+                new AjaxOptions
+                {
+                    OnBegin = "BeginClient",
+                    OnSuccess = "OnSuccess",
+                    OnFailure = "OnFailure",
+                    LoadingElementId = "progress"
+                }))
+    {
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Student's Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", aria_describedby = "add1" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Student's School Number:</span>
+                @Html.TextBoxFor(m => m.Number, new { @class = "form-control", aria_describedby = "add2" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Student's Department:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.Department, new { @class = "form-control", aria_describedby = "add3" })
+            </div>
+        </div>
+    <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add4">Student's Advisor:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.Advisor, new { @class = "form-control", aria_describedby = "add4" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:200px;"class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+
+
+    }
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function BeginClient(xhr) {
+            accessToken = sessionStorage.getItem("accessToken");
+            xhr.setRequestHeader('Authorization', "Bearer " + accessToken);
+        }
+        $.ajaxSetup({
+            'beforeSend': function (xhr) {
+                accessToken = sessionStorage.getItem("accessToken");
+                xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
+            }
+        });
+        function OnSuccess(response) {
+            alert(JSON.stringify(response));
+            console.log("It's done.");
+            location.reload();
+        }
+        function OnFailure(response) {
+            alert(JSON.stringify(response));
+        }
+    </script>
+</div>
+

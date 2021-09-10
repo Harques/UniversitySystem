@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Update Department";
+}
+<div class="vertical-center">
+    <h1 style="margin-left: 80px; margin-bottom:20px;">Update Department</h1>
+    <form method="post" action="/api/university/departments?_method=PUT" id="updateDepartment">
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Department's ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add1" type="number" name="ID" id="ID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Department's Name:</span>
+                <input class="form-control" aria-describedby="add2" type="text" name="Name" id="Name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:190px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            var form = $('#updateDepartment');
+            form.submit(function (ev) {
+                var dto = {};
+                dto.ID = $('#ID').val()
+                dto.Name = $('#Name').val()
+                ev.preventDefault();
+                var formAction = $(this).attr('action');
+                $.ajax({
+                    url: formAction,
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dto),
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            })
+
+        });
+    </script>
+</div>
+

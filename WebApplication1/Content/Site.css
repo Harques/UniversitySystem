@@ -1,0 +1,78 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    overflow-y: scroll;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 350px;
+    padding-right: 350px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+.list-align{
+    text-align:center;
+}
+
+.list-margin{
+    margin-bottom:5px;
+}
+
+a.item-background {
+    background-color: #4E9DE1;
+    border-color: #4E9DE1;
+    color: white;
+}
+
+a.item-background:hover{
+    background-color:#336bb7;
+    border-color:#336bb7;
+    color:white;
+}
+ul.navbar-nav {
+    float: none;
+    margin: 0 auto;
+    display: table;
+    table-layout: fixed;
+}
+
+a.navbar-size{
+    font-size:30px;
+}
+
+.container{
+    margin-left:auto;
+    margin-right:auto;
+}
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.horizontal-center{
+    margin: 0;
+    position: absolute;
+    left:50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.vertical-horizontal-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+

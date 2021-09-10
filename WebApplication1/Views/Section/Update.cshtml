@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Update Section";
+}
+<div class="vertical-center">
+    <h1 style="margin-left: 90px; margin-bottom:20px;">Update Section</h1>
+    <form method="post" action="/api/university/sections?_method=PUT" id="updateSection">
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Section's ID:</span>
+                <input class="form-control" aria-describedby="add1" type="number" name="ID" id="ID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Course ID:&#8197;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add2" type="number" name="ID" id="ID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Semester:&#8201;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add3" type="text" name="Semester" id="Semester" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add4">Instructor:&hairsp;&#8200;&#8197;&#8197;&#8200;</span>
+                <input class="form-control" aria-describedby="add4" type="text" name="Instructor" id="Instructor" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:170px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            var form = $('#updateSection');
+            form.submit(function (ev) {
+                var dto = {};
+                dto.ID = $('#ID').val()
+                dto.CourseID = $('#CourseID').val()
+                dto.Semester = $('#Semester').val()
+                dto.Instructor = $('#Instructor').val()
+                ev.preventDefault();
+                var formAction = $(this).attr('action');
+                $.ajax({
+                    url: formAction,
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dto),
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            })
+
+        });
+    </script>
+</div>
+

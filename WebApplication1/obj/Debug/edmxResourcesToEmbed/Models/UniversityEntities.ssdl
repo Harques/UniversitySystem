@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="COURSE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="course_code" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="course_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="course_description" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="credit_hours" Type="int" />
+    <Property Name="department_id" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DEPARTMENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="department_name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="INSTRUCTOR">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="instructor_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="instructor_office" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="rank" Type="varchar" MaxLength="50" />
+    <Property Name="department_id" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SECTION">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="course_id" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="semester" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="instructor_name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="STUDENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="student_number" Type="bigint" Nullable="false" />
+    <Property Name="student_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="gpa" Type="float" Nullable="false" />
+    <Property Name="department_id" Type="int" Nullable="false" />
+    <Property Name="advisor_name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="STUDENT_SECTIONS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="student_id" Type="int" Nullable="false" />
+    <Property Name="section_id" Type="int" Nullable="false" />
+    <Property Name="grade" Type="char" MaxLength="2" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_COURSE_DEPARTMENT">
+    <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="COURSE" Type="Self.COURSE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="COURSE">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INSTRUCTOR_INSTRUCTOR">
+    <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="INSTRUCTOR">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STUDENT_DEPARTMENT">
+    <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="STUDENT">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STUDENT_SECTIONS_SECTION">
+    <End Role="SECTION" Type="Self.SECTION" Multiplicity="1" />
+    <End Role="STUDENT_SECTIONS" Type="Self.STUDENT_SECTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SECTION">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="STUDENT_SECTIONS">
+        <PropertyRef Name="section_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STUDENT_SECTIONS_STUDENT">
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="1" />
+    <End Role="STUDENT_SECTIONS" Type="Self.STUDENT_SECTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="STUDENT_SECTIONS">
+        <PropertyRef Name="student_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="UniversityModelStoreContainer">
+    <EntitySet Name="COURSE" EntityType="Self.COURSE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DEPARTMENT" EntityType="Self.DEPARTMENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INSTRUCTOR" EntityType="Self.INSTRUCTOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SECTION" EntityType="Self.SECTION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STUDENT" EntityType="Self.STUDENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STUDENT_SECTIONS" EntityType="Self.STUDENT_SECTIONS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_COURSE_DEPARTMENT" Association="Self.FK_COURSE_DEPARTMENT">
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENT" />
+      <End Role="COURSE" EntitySet="COURSE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INSTRUCTOR_INSTRUCTOR" Association="Self.FK_INSTRUCTOR_INSTRUCTOR">
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENT" />
+      <End Role="INSTRUCTOR" EntitySet="INSTRUCTOR" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STUDENT_DEPARTMENT" Association="Self.FK_STUDENT_DEPARTMENT">
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENT" />
+      <End Role="STUDENT" EntitySet="STUDENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STUDENT_SECTIONS_SECTION" Association="Self.FK_STUDENT_SECTIONS_SECTION">
+      <End Role="SECTION" EntitySet="SECTION" />
+      <End Role="STUDENT_SECTIONS" EntitySet="STUDENT_SECTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STUDENT_SECTIONS_STUDENT" Association="Self.FK_STUDENT_SECTIONS_STUDENT">
+      <End Role="STUDENT" EntitySet="STUDENT" />
+      <End Role="STUDENT_SECTIONS" EntitySet="STUDENT_SECTIONS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

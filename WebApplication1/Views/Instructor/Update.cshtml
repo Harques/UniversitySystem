@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Update Instructor";
+}
+<div class="vertical-center">
+    <h1 style="margin-left: 100px; margin-bottom:20px;">Update Instructor</h1>
+    <form method="post" action="/api/university/instructors?_method=PUT" id="updateInstructor">
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Instructor's ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add1" type="number" name="ID" id="ID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Instructor's Name:&nbsp;</span>
+                <input class="form-control" aria-describedby="add2" type="text" name="Name" id="Name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Instructor's Office:&nbsp;&hairsp;</span>
+                <input class="form-control" aria-describedby="add3" type="text" name="Office" id="Office" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add4">Instructor's Rank:&hairsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add4" type="text" name="Rank" id="Rank" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add5">Department ID:&ensp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" aria-describedby="add5" type="number" name="DepartmentID" id="DepartmentID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:190px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            var form = $('#updateInstructor');
+            form.submit(function (ev) {
+                var dto = {};
+                dto.ID = $('#ID').val()
+                dto.Name = $('#Name').val()
+                dto.Office = $('#Office').val()
+                dto.Rank = $('#Rank').val()
+                dto.DepartmentID = $('#DepartmentID').val()
+                ev.preventDefault();
+                var formAction = $(this).attr('action');
+                $.ajax({
+                    url: formAction,
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dto),
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            })
+
+        });
+    </script>
+</div>
+

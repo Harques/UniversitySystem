@@ -1,0 +1,61 @@
+﻿@model WebApplication1.Models.DTOS.Create.CreateInstructorDto
+@{
+    ViewBag.Title = "Insert Instructor";
+}
+
+<div class="vertical-center">
+    <h1 style="margin-left: 100px; margin-bottom:20px;">Create Instructor</h1>
+    @using (Ajax.BeginForm("", "api/university/instructors",
+                new AjaxOptions
+                {
+                    OnSuccess = "OnSuccess",
+                    OnFailure = "OnFailure",
+                    LoadingElementId = "progress"
+                }))
+    {
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Instructor's Name:&nbsp;</span>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", aria_describedby = "add1" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Instructor's Office:&nbsp;</span>
+                @Html.TextBoxFor(m => m.Office, new { @class = "form-control", aria_describedby = "add2" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Instructor's Rank:&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.Rank, new { @class = "form-control", aria_describedby = "add3" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add4">Department Name:</span>
+                @Html.TextBoxFor(m => m.DepartmentName, new { @class = "form-control", aria_describedby = "add4" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:200px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+
+
+    }
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnSuccess(response) {
+            alert(response);
+            console.log("It's done.");
+            location.reload();
+        }
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>
+</div>
+

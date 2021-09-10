@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Delete Student-Section";
+}
+
+<div class="vertical-center">
+    <h1 style="margin-left: 60px; margin-bottom:20px;">Delete Student Section</h1>
+    <form method="post" action="/api/university/student-sections?_method=DELETE" id="deleteStudentSection">
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Student Section's ID:</span>
+                <input class="form-control" aria-describedby="add1" type="number" name="ID" id="ID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:200px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            var form = $('#deleteStudentSection');
+            form.submit(function (ev) {
+                ev.preventDefault();
+                var formAction = $(this).attr('action');
+                $.ajax({
+                    url: formAction + '&id=' + $('#ID').val(),
+                    type: 'DELETE',
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            })
+
+        });
+    </script>
+</div>
+

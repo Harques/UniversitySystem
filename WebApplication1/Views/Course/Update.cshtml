@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Update Course";
+}
+<div class="vertical-center">
+    <h1 style="margin-left: 130px; margin-bottom:20px;">Update Course</h1>
+    <form method="post" action="/api/university/courses?_method=PUT" id="updateCourse">
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Course's ID:&#8198;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" type="number" name="ID" id="ID" aria-describedby="add1" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Course's Code:&hairsp;&hairsp;ttt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" type="text" name="Code" id="Code" aria-describedby="add2" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add3">Course's Name:&#8198;&emsp14;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" type="text" name="Name" id="Name" aria-describedby="add3" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add4">Course's Description:&emsp13;&#8198;&hairsp;</span>
+                <textarea class="form-control" name="Description" id="Description" aria-describedby="add4"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add5">Course's Credit Hours:</span>
+                <input class="form-control" type="number" name="CreditHours" id="CreditHours" aria-describedby="add5" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add6">Department ID:&#8198;&hairsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input class="form-control" type="number" name="DepartmentID" id="DepartmentID" aria-describedby="add6" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:210px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            var form = $('#updateCourse');
+            form.submit(function (ev) {
+                var dto = {};
+                dto.ID = $('#ID').val()
+                dto.Code = $('#Code').val()
+                dto.Description = $('#Description').val()
+                dto.CreditHours = $('#CreditHours').val()
+                dto.DepartmentID = $('#DepartmentID').val()
+                ev.preventDefault();
+                var formAction = $(this).attr('action');
+                $.ajax({
+                    url: formAction,
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(dto),
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            })
+
+        });
+    </script>
+</div>
+

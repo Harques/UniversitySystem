@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.DTOS.Create.CreateStudentSectionDto
+@{
+    ViewBag.Title = "Create Student Section";
+}
+<div class="vertical-center">
+    <h1 style="margin-left: 80px; margin-bottom:20px;">Create Student Section</h1>
+    @using (Ajax.BeginForm("", "api/university/student-sections",
+                new AjaxOptions
+                {
+                    OnSuccess = "OnSuccess",
+                    OnFailure = "OnFailure",
+                    LoadingElementId = "progress"
+                }))
+    {
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Student's School Number:</span>
+                @Html.TextBoxFor(m => m.Number, new { @class = "form-control", aria_describedby = "add1" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add2">Section's ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.ID, new { @type = "number", @min = 0, @class = "form-control", aria_describedby = "add2" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:210px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+
+
+    }
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnSuccess(response) {
+            alert(response);
+            console.log("It's done.");
+            location.reload();
+        }
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>
+</div>
+

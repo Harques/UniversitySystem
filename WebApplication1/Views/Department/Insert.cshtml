@@ -1,0 +1,43 @@
+﻿@model WebApplication1.Models.DTOS.Create.CreateDepartmentDto
+@{
+    ViewBag.Title = "Create Department";
+}
+
+<div class="vertical-center">
+    <h1 style="margin-left: 125px; margin-bottom:20px;">Create Department</h1>
+    @using (Ajax.BeginForm("", "api/university/departments",
+                new AjaxOptions
+                {
+                    OnSuccess = "OnSuccess",
+                    OnFailure = "OnFailure",
+                    LoadingElementId = "progress"
+                }))
+    {
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Department's Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", aria_describedby = "add1" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:230px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+
+
+
+    }
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnSuccess(response) {
+            alert(response);
+            console.log("It's done.");
+            location.reload();
+        }
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>
+</div>
+

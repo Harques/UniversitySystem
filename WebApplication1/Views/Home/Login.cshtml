@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div style="margin-left:300px;" class="vertical-horizontal-center">
+        <h1 style="margin-left: 150px; margin-bottom:20px;">Log In</h1>
+        @using (Ajax.BeginForm("", "token",
+                    new AjaxOptions
+                    {
+                        OnSuccess = "OnSuccess",
+                        OnFailure = "OnFailure",
+                        LoadingElementId = "progress",
+                    }))
+        {
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon" id="add1">Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&hairsp;&hairsp;&hairsp;</span>
+                    <input class="form-control" aria-describedby="add1" type="text" id="username" name="username" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon" id="add2">Password:</span>
+                    <input class="form-control" aria-describedby="add2" type="text" id="password" name="password" />
+                </div>
+            </div>
+            <input type="hidden" id="grant_type" name="grant_type" value="password">
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <input style="margin-left:155px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+                </div>
+            </div>
+
+
+
+        }
+        <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+        <script type="text/javascript">
+            function OnSuccess(response) {
+                alert("Successfully logged in.");
+                alert(JSON.stringify(response));
+                sessionStorage.setItem('accessToken', response.access_token);
+                window.location.href = "/Home/Index";
+                //    alert(response);
+                //    console.log("It's done.");
+                //    location.reload();
+                //
+            }
+            function OnFailure(response) {
+                alert(JSON.stringify(response));
+            }
+        </script>
+    </div>
+</body>
+</html>

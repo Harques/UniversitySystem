@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Delete Course";
+}
+
+<div style="margin-left:15px;" class="vertical-center">
+    <h1 style="margin-left: 100px; margin-bottom:20px;">Delete Course</h1>
+    <form method="post" action="/api/university/courses?_method=DELETE" id="deleteCourse">
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="add1">Course's ID:</span>
+                <input class="form-control" type="number" name="ID" id="ID" aria-describedby="add1" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group input-group-lg">
+                <input style="margin-left:170px;" class="btn btn-default btn-lg" type="submit" value="Submit" />
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $(function () {
+            var form = $('#deleteCourse');
+            form.submit(function (ev) {
+                ev.preventDefault();
+                var formAction = $(this).attr('action');
+                $.ajax({
+                    url: formAction + '&id=' + $('#ID').val(),
+                    type: 'DELETE',
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            })
+
+        });
+    </script>
+</div>
+

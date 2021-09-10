@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UniversityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="COURSE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="course_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="course_description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="credit_hours" Type="Int32" />
+    <Property Name="department_id" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="DEPARTMENT" Relationship="Self.FK_COURSE_DEPARTMENT" FromRole="COURSE" ToRole="DEPARTMENT" />
+  </EntityType>
+  <EntityType Name="DEPARTMENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="COURSEs" Relationship="Self.FK_COURSE_DEPARTMENT" FromRole="DEPARTMENT" ToRole="COURSE" />
+    <NavigationProperty Name="INSTRUCTORs" Relationship="Self.FK_INSTRUCTOR_INSTRUCTOR" FromRole="DEPARTMENT" ToRole="INSTRUCTOR" />
+    <NavigationProperty Name="STUDENTs" Relationship="Self.FK_STUDENT_DEPARTMENT" FromRole="DEPARTMENT" ToRole="STUDENT" />
+  </EntityType>
+  <EntityType Name="INSTRUCTOR">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="instructor_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="instructor_office" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="rank" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="department_id" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="DEPARTMENT" Relationship="Self.FK_INSTRUCTOR_INSTRUCTOR" FromRole="INSTRUCTOR" ToRole="DEPARTMENT" />
+  </EntityType>
+  <EntityType Name="SECTION">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="course_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="semester" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="instructor_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="STUDENT_SECTIONS" Relationship="Self.FK_STUDENT_SECTIONS_SECTION" FromRole="SECTION" ToRole="STUDENT_SECTIONS" />
+  </EntityType>
+  <EntityType Name="STUDENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="student_number" Type="Int64" Nullable="false" />
+    <Property Name="student_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="gpa" Type="Double" Nullable="false" />
+    <Property Name="department_id" Type="Int32" Nullable="false" />
+    <Property Name="advisor_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="DEPARTMENT" Relationship="Self.FK_STUDENT_DEPARTMENT" FromRole="STUDENT" ToRole="DEPARTMENT" />
+    <NavigationProperty Name="STUDENT_SECTIONS" Relationship="Self.FK_STUDENT_SECTIONS_STUDENT" FromRole="STUDENT" ToRole="STUDENT_SECTIONS" />
+  </EntityType>
+  <EntityType Name="STUDENT_SECTIONS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="student_id" Type="Int32" Nullable="false" />
+    <Property Name="section_id" Type="Int32" Nullable="false" />
+    <Property Name="grade" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="SECTION" Relationship="Self.FK_STUDENT_SECTIONS_SECTION" FromRole="STUDENT_SECTIONS" ToRole="SECTION" />
+    <NavigationProperty Name="STUDENT" Relationship="Self.FK_STUDENT_SECTIONS_STUDENT" FromRole="STUDENT_SECTIONS" ToRole="STUDENT" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_COURSE_DEPARTMENT">
+    <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="COURSE" Type="Self.COURSE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="COURSE">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INSTRUCTOR_INSTRUCTOR">
+    <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="INSTRUCTOR" Type="Self.INSTRUCTOR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="INSTRUCTOR">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STUDENT_DEPARTMENT">
+    <End Role="DEPARTMENT" Type="Self.DEPARTMENT" Multiplicity="1" />
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DEPARTMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="STUDENT">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STUDENT_SECTIONS_SECTION">
+    <End Role="SECTION" Type="Self.SECTION" Multiplicity="1" />
+    <End Role="STUDENT_SECTIONS" Type="Self.STUDENT_SECTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SECTION">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="STUDENT_SECTIONS">
+        <PropertyRef Name="section_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STUDENT_SECTIONS_STUDENT">
+    <End Role="STUDENT" Type="Self.STUDENT" Multiplicity="1" />
+    <End Role="STUDENT_SECTIONS" Type="Self.STUDENT_SECTIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STUDENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="STUDENT_SECTIONS">
+        <PropertyRef Name="student_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="UniversityEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="COURSEs" EntityType="Self.COURSE" />
+    <EntitySet Name="DEPARTMENTs" EntityType="Self.DEPARTMENT" />
+    <EntitySet Name="INSTRUCTORs" EntityType="Self.INSTRUCTOR" />
+    <EntitySet Name="SECTIONs" EntityType="Self.SECTION" />
+    <EntitySet Name="STUDENTs" EntityType="Self.STUDENT" />
+    <EntitySet Name="STUDENT_SECTIONS" EntityType="Self.STUDENT_SECTIONS" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_COURSE_DEPARTMENT" Association="Self.FK_COURSE_DEPARTMENT">
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENTs" />
+      <End Role="COURSE" EntitySet="COURSEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INSTRUCTOR_INSTRUCTOR" Association="Self.FK_INSTRUCTOR_INSTRUCTOR">
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENTs" />
+      <End Role="INSTRUCTOR" EntitySet="INSTRUCTORs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STUDENT_DEPARTMENT" Association="Self.FK_STUDENT_DEPARTMENT">
+      <End Role="DEPARTMENT" EntitySet="DEPARTMENTs" />
+      <End Role="STUDENT" EntitySet="STUDENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STUDENT_SECTIONS_SECTION" Association="Self.FK_STUDENT_SECTIONS_SECTION">
+      <End Role="SECTION" EntitySet="SECTIONs" />
+      <End Role="STUDENT_SECTIONS" EntitySet="STUDENT_SECTIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STUDENT_SECTIONS_STUDENT" Association="Self.FK_STUDENT_SECTIONS_STUDENT">
+      <End Role="STUDENT" EntitySet="STUDENTs" />
+      <End Role="STUDENT_SECTIONS" EntitySet="STUDENT_SECTIONS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        if (sessionStorage.getItem('accessToken') == null && window.location.pathname != '/') {
+            window.location.href = "/Home/Login"
+        }
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-center">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-size" })</li>
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "navbar-size" })</li>
+                    <li><a id="logout" class="navbar-size" href="/">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#logout').click(function () {
+            sessionStorage.removeItem("accessToken");
+            window.location.href = "/Home/Login";
+        })
+    </script>
+    <div class="container body-content">
+        @RenderBody()
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
